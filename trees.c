@@ -117,8 +117,6 @@ tnode* find(tnode* root, int target){
 
 }
 
-// delete Function:
-
 
 // this function: to find the maximum value in the binary tree:
 int maxValue(tnode*  root) {
@@ -157,6 +155,115 @@ int minValue(tnode*  root) {
     }
 
 }
+
+// findSuccessor Funtion: Successor is minimum node in right subtree.
+tnode* findSuccessor(tnode* tNode){
+
+    tnode* currenNode =  tNode->right;
+    while (currenNode != NULL || currenNode->left != NULL){
+        currenNode->left; //<--- reach the max Left leaf.
+    }
+
+    return currenNode;
+}
+
+
+// findPredecessor Funtion: Predecessor is maximum node in left subtree.
+tnode* findPredecessor(tnode* tNode){
+
+    tnode* currenNode =  tNode->left;
+    while (currenNode != NULL || currenNode->right != NULL){
+        currenNode->right; //<--- reach the max right leaf.
+    }
+    return currenNode;
+}
+
+//getParent Function:
+tnode* getParent(tnode* root, tnode* targetNode){
+
+    if (root == NULL || root == targetNode) {
+            return NULL;
+        }
+
+        tnode* current = root;
+        tnode* parent = NULL;
+
+        while (current != NULL && current != targetNode) {
+            if (targetNode->data < current->data) {
+                parent = current;
+                current = current->left;
+            } else {
+                parent = current;
+                current = current->right;
+            }
+        }
+
+        return parent;
+}
+
+
+
+
+/* Delete Function:-
+
+so to delete a target node we have 3 cases:
+CASE1: if the target node is leaf(does not have any children) or have just right child, in this case its easy just do this :
+A)remove the link from target node parent.   B)free the taget from the memo.
+
+CASE2: if the target node have just one child , in this case do this :
+A) remove the link from target node parent and link it with the taget node Child -> Grand parent --Link --> grandson.
+B)free the taget node from the memo.
+
+CASE3: if the target node have 2  children , in this case we have 2 ways to do this :
+
+~WAY1:  SuccessorSuccessor is minimum node in right subtree :
+A) make the target node values is the Successor(minimum node vlaue in right subtree).
+B)delete the Successor
+
+
+
+~WAY2: Predecessor is maximum node in left subtree:
+*/ 
+
+
+// Function to delete a node from the binary tree
+tnode* deleteNode( tnode* root, int data) {
+
+     if (root == NULL) {
+        return root;
+    }
+
+    tnode* targetNode  = find(root,data);
+    tnode* parent = getParent(root,targetNode);
+  
+        // Case 1: No child or only right child
+        if (targetNode->left == NULL) {
+            tnode* grandSon = targetNode->right;
+            targetNode->right = NULL;
+            parent->right = grandSon;
+            free(targetNode);
+            return grandSon;
+        }
+        // Case 2: Only left child
+        else if (targetNode->right == NULL) {
+            tnode* grandSon = targetNode->left;
+            targetNode->left = NULL;
+            parent->left = grandSon;
+            free(targetNode);
+            return grandSon;
+        }
+        // Case 3: Two children
+        else {
+            tnode* successor = findSuccessor(targetNode);
+            targetNode->data = successor->data;
+            targetNode->right = deleteNode(root->right, successor->data);
+        }
+
+        return targetNode;
+    }
+
+
+
 
 
 
