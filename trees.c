@@ -39,6 +39,7 @@ A binary tree is a tree data structure where each node can have at most two chil
 
  }tnode;
 
+// O(1)
  tnode* createTnode(int data){
 
      tnode* newNode = (tnode*)malloc(sizeof(tnode)); //<-- will search about a space in the memo
@@ -55,7 +56,7 @@ A binary tree is a tree data structure where each node can have at most two chil
  }
 
 
-//function to insert the data inside the node:
+//function to insert the data inside the node: O(1)
  tnode* insertTnode(tnode* node, int data){
     
     // if the root is null then we will create a tree :
@@ -79,6 +80,7 @@ A binary tree is a tree data structure where each node can have at most two chil
 
 
 // this function will use to Traversal the tree depending on op (1:in-order // 2:post-order //3:pre-order):
+// O(n)
 void Traversal(tnode* root, int op){
 
 // to print the in-order(left , visit_Root, Right) traversal:
@@ -118,7 +120,7 @@ tnode* find(tnode* root, int target){
 }
 
 
-// this function: to find the maximum value in the binary tree:
+// this function: to find the maximum value in the binary tree: O(logN)
 int maxValue(tnode*  root) {
 
 // checking if the tree is null
@@ -137,7 +139,7 @@ int maxValue(tnode*  root) {
 }
 
 
-// this function: to find the maximum value in the binary tree:
+// this function: to find the maximum value in the binary tree: O(logN)
 int minValue(tnode*  root) {
 
 // checking if the tree is null
@@ -156,7 +158,7 @@ int minValue(tnode*  root) {
 
 }
 
-// findSuccessor Funtion: Successor is minimum node in right subtree.
+// findSuccessor Funtion: Successor is minimum node in right subtree. O(logN)
 tnode* findSuccessor(tnode* tNode){
 
     tnode* currenNode =  tNode->right;
@@ -168,7 +170,7 @@ tnode* findSuccessor(tnode* tNode){
 }
 
 
-// findPredecessor Funtion: Predecessor is maximum node in left subtree.
+// findPredecessor Funtion: Predecessor is maximum node in left subtree. O(logN)
 tnode* findPredecessor(tnode* tNode){
 
     tnode* currenNode =  tNode->left;
@@ -205,6 +207,8 @@ tnode* getParent(tnode* root, tnode* targetNode){
 
 
 /* Delete Function:-
+
+O(logN)
 
 so to delete a target node we have 3 cases:
 CASE1: if the target node is leaf(does not have any children) or have just right child, in this case its easy just do this :
