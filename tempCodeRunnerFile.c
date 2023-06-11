@@ -160,7 +160,7 @@ int minValue(tnode*  root) {
 tnode* findSuccessor(tnode* tNode){
 
     tnode* currenNode =  tNode->right;
-    while (currenNode != NULL && currenNode->left != NULL){
+    while (currenNode != NULL || currenNode->left != NULL){
          currenNode = currenNode->left; // Move to the maximum left leaf. //<--- reach the max Left leaf.
     }
 
@@ -172,7 +172,7 @@ tnode* findSuccessor(tnode* tNode){
 tnode* findPredecessor(tnode* tNode){
 
     tnode* currenNode =  tNode->left;
-    while (currenNode != NULL && currenNode->right != NULL){
+    while (currenNode != NULL || currenNode->right != NULL){
        currenNode =  currenNode->right; //<--- reach the max right leaf.
     }
     return currenNode;
@@ -267,7 +267,7 @@ tnode* deleteNode( tnode* root, int data) {
     else {
         tnode* successor = findSuccessor(targetNode);
         targetNode->data = successor->data;
-        targetNode->right = deleteNode(targetNode->right, successor->data);
+        targetNode->right = deleteNode(root->right, successor->data);
     }
         return root;
     }
